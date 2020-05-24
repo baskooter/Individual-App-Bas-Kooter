@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/backgroundMan"
+        android:layout_width="300dp"
+        android:layout_height="600dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrowBut"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/backgroundmain" />
+
+    <Button
+        android:id="@+id/chestBut"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="240dp"
+        android:layout_marginEnd="164dp"
+        android:background="@drawable/roundedbutton"
+        android:onClick="chestClicked"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menuBut" />
+
+    <ImageView
+        android:id="@+id/menuBut"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="menuClicked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menuicon" />
+
+    <ImageView
+        android:id="@+id/arrowBut"
+        android:layout_width="68dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="16dp"
+        android:onClick="arrowClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow" />
+
+    <TextView
+        android:id="@+id/voortgangBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:onClick="voortgangClicked"
+        android:text="Voortgang"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/menuBut"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
