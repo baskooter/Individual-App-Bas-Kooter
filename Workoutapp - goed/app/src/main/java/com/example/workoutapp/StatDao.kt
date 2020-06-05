@@ -17,4 +17,7 @@ interface StatDao {
     @Update
     suspend fun updatestat(stat: Stats)
 
+    @Query("DELETE FROM statTable")
+    suspend fun deleteAllStats()
+
 }

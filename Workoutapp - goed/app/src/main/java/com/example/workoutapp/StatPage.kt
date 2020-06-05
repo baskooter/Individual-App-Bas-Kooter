@@ -1,5 +1,6 @@
 package com.example.workoutapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_chest_exercises.*
 import kotlinx.android.synthetic.main.activity_stat_page.*
+import kotlinx.android.synthetic.main.stat_place.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,6 +46,22 @@ class StatPage : AppCompatActivity() {
             gewichtTxt.visibility = View.VISIBLE
         }
 
+        backStat.setOnClickListener(){
+            val intent = Intent(this, MainActivity::class.java)
+
+            startActivity(intent)
+        }
+
+        delBut.setOnClickListener(){
+
+            CoroutineScope(Dispatchers.Main).launch {
+                withContext(Dispatchers.IO) {
+                    statRepository.deleteAllStats()
+                }
+                getStatsFromDatabase()
+            }
+        }
+
         addBut.setOnClickListener(){
             var reps = repsInput.text.toString()
             var gewicht = gewichtInput.text.toString()
@@ -62,13 +80,53 @@ class StatPage : AppCompatActivity() {
                 reps = reps
             )
 
+            addBut.visibility = View.GONE
+            repsInput.visibility = View.GONE
+            gewichtInput.visibility = View.GONE
+            repsTxt.visibility = View.GONE
+            gewichtTxt.visibility = View.GONE
+
+
+
             CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.IO) {
                     statRepository.insertStat(stat)
                 }
+                getRemindersFromDatabase()
             }
 
 
+        }
+
+            updateBut.setOnClickListener(){
+                val date : Long = System.currentTimeMillis()
+                val gewicht = "test"
+                val reps = "test"
+
+                val stat = Stats(
+                    datum = date,
+                    gewicht = gewicht,
+                    reps = reps
+                )
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.IO) {
+                        statRepository.updateStat(stat)
+                    }
+                    getRemindersFromDatabase()
+                }
+
+            }
+    }
+
+    private fun getRemindersFromDatabase() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val reminders = withContext(Dispatchers.IO) {
+                statRepository.getAllStats()
+            }
+            this@StatPage.statList.clear()
+            this@StatPage.statList.addAll(reminders)
+            statAdapter.notifyDataSetChanged()
         }
     }
 

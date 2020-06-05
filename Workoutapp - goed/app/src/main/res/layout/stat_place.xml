@@ -7,31 +7,44 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/tvRep"
+        android:layout_width="102dp"
+        android:layout_height="48dp"
+        android:background="@drawable/black"
+        android:text="12"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/tvGewicht"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/tvDatum"
-        android:layout_width="140dp"
+        android:layout_width="135dp"
         android:layout_height="48dp"
         android:background="@drawable/black"
         android:text="TextView"
         android:textAlignment="center"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvGewicht"
-        android:layout_width="140dp"
+        android:layout_width="102dp"
         android:layout_height="48dp"
-        android:text="TextView"
+        android:background="@drawable/black"
+        android:text="90"
         android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/tvDatum"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvRep"
-        android:layout_width="140dp"
+    <ImageView
+        android:id="@+id/updateBut"
+        android:layout_width="48dp"
         android:layout_height="48dp"
-        android:text="TextView"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/tvRep"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pencil" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

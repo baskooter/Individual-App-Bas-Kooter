@@ -27,4 +27,6 @@ public class StatRepository(context: Context) {
         statDao.updatestat(stat)
     }
 
+    suspend fun deleteAllStats() = statDao.deleteAllStats()
+
 }
