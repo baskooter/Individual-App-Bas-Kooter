@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StatPage">
+
+    <TextView
+        android:id="@+id/repsTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="28dp"
+        android:text="Reps:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gewichtInput"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/repsInput"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/repsTxt"
+        app:layout_constraintTop_toBottomOf="@+id/editBut" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStats"
+        android:layout_width="387dp"
+        android:layout_height="399dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/editBut"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="136dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvStats"
+        app:srcCompat="@drawable/pencil" />
+
+    <TextView
+        android:id="@+id/gewichtTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="28dp"
+        android:text="Gewicht:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/gewichtInput"
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/gewichtTxt"
+        app:layout_constraintTop_toBottomOf="@+id/editBut" />
+
+    <Button
+        android:id="@+id/addBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="56dp"
+        android:text="Voeg toe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editBut"
+        android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

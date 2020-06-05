@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Workout app</string>
+    <string name="backButton"><![CDATA[<]]></string>
+</resources>
