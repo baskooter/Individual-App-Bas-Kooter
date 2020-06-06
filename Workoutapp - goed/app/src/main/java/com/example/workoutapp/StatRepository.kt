@@ -19,7 +19,7 @@ public class StatRepository(context: Context) {
         statDao.insertStat(stat)
     }
 
-    suspend fun deleteStgat(stat: Stats) {
+    suspend fun deleteStat(stat: Stats) {
         statDao.deleteStat(stat)
     }
 

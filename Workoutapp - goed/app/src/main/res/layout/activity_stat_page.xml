@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/tvDatum2"
-        android:layout_width="102dp"
+        android:layout_width="126dp"
         android:layout_height="48dp"
         android:background="@drawable/black"
         android:text="Gewicht"
@@ -32,10 +32,10 @@
 
     <TextView
         android:id="@+id/tvRep2"
-        android:layout_width="102dp"
+        android:layout_width="126dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginEnd="12dp"
         android:background="@drawable/black"
         android:text="Reps"
         android:textAlignment="center"
@@ -177,5 +177,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvStats"
         app:srcCompat="@drawable/ic_delete_black_24dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="156dp"
+        android:text="Swipe to delete"
+        app:layout_constraintBottom_toTopOf="@+id/tvDatum2"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_chest_exercises.*
@@ -35,6 +36,7 @@ class StatPage : AppCompatActivity() {
         rvStats.layoutManager = LinearLayoutManager(this@StatPage, RecyclerView.VERTICAL, false)
         rvStats.adapter = statAdapter
         rvStats.addItemDecoration(DividerItemDecoration(this@StatPage, DividerItemDecoration.VERTICAL))
+        createItemTouchHelper().attachToRecyclerView(rvStats)
 
         getStatsFromDatabase()
 
@@ -92,42 +94,44 @@ class StatPage : AppCompatActivity() {
                 withContext(Dispatchers.IO) {
                     statRepository.insertStat(stat)
                 }
-                getRemindersFromDatabase()
+                getStatsFromDatabase()
             }
 
 
         }
 
-            updateBut.setOnClickListener(){
-                val date : Long = System.currentTimeMillis()
-                val gewicht = "test"
-                val reps = "test"
 
-                val stat = Stats(
-                    datum = date,
-                    gewicht = gewicht,
-                    reps = reps
-                )
+    }
+
+    private fun createItemTouchHelper(): ItemTouchHelper {
+
+        // Callback which is used to create the ItemTouch helper. Only enables left swipe.
+        // Use ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) to also enable right swipe.
+        val callback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+            // Enables or Disables the ability to move items up and down.
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+
+                val statToDelete = statList[position]
 
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.IO) {
-                        statRepository.updateStat(stat)
+                        statRepository.deleteStat(statToDelete)
                     }
-                    getRemindersFromDatabase()
+                    getStatsFromDatabase()
                 }
-
             }
-    }
-
-    private fun getRemindersFromDatabase() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val reminders = withContext(Dispatchers.IO) {
-                statRepository.getAllStats()
-            }
-            this@StatPage.statList.clear()
-            this@StatPage.statList.addAll(reminders)
-            statAdapter.notifyDataSetChanged()
         }
+        return ItemTouchHelper(callback)
     }
 
     private fun getStatsFromDatabase() {

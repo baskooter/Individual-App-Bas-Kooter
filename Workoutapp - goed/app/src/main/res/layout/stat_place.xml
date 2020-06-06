@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/tvRep"
-        android:layout_width="102dp"
+        android:layout_width="126dp"
         android:layout_height="48dp"
         android:background="@drawable/black"
         android:text="12"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/tvGewicht"
-        android:layout_width="102dp"
+        android:layout_width="126dp"
         android:layout_height="48dp"
         android:background="@drawable/black"
         android:text="90"
@@ -38,13 +38,5 @@
         android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/tvDatum"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/updateBut"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:layout_constraintStart_toEndOf="@+id/tvRep"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pencil" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
