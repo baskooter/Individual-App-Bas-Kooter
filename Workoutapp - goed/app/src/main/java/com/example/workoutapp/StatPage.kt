@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,16 +23,17 @@ import java.util.*
 
 class StatPage : AppCompatActivity() {
 
-    private val statList = arrayListOf<Stats>()
-    private val statAdapter = StatAdapter(statList)
-    private lateinit var statRepository: StatRepository
+    private val stats = arrayListOf<Stats>()
+    private val statAdapter = StatAdapter(stats)
+    private val viewModel: StatPageViewmodel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stat_page)
 
         statAdapter.notifyDataSetChanged()
-        statRepository = StatRepository(this)
+
+
 
 
         rvStats.layoutManager = LinearLayoutManager(this@StatPage, RecyclerView.VERTICAL, false)
@@ -38,7 +41,7 @@ class StatPage : AppCompatActivity() {
         rvStats.addItemDecoration(DividerItemDecoration(this@StatPage, DividerItemDecoration.VERTICAL))
         createItemTouchHelper().attachToRecyclerView(rvStats)
 
-        getStatsFromDatabase()
+        observeViewModel()
 
         editBut.setOnClickListener(){
             addBut.visibility = View.VISIBLE
@@ -58,9 +61,9 @@ class StatPage : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.IO) {
-                    statRepository.deleteAllStats()
+                    viewModel.deleteAllStats()
                 }
-                getStatsFromDatabase()
+                observeViewModel()
             }
         }
 
@@ -92,9 +95,9 @@ class StatPage : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.IO) {
-                    statRepository.insertStat(stat)
+                    viewModel.insertStat(stat)
                 }
-                getStatsFromDatabase()
+                observeViewModel()
             }
 
 
@@ -121,28 +124,28 @@ class StatPage : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
 
-                val statToDelete = statList[position]
+                val statToDelete = stats[position]
 
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.IO) {
-                        statRepository.deleteStat(statToDelete)
+                        viewModel.deleteStat(statToDelete)
                     }
-                    getStatsFromDatabase()
+                    observeViewModel()
                 }
             }
         }
         return ItemTouchHelper(callback)
     }
 
-    private fun getStatsFromDatabase() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val stats = withContext(Dispatchers.IO) {
-                statRepository.getAllStats()
-            }
-            this@StatPage.statList.clear()
-            this@StatPage.statList.addAll(stats)
+    private fun observeViewModel() {
+        viewModel.stats.observe(this, androidx.lifecycle.Observer { stats ->
+            this@StatPage.stats.clear()
+            this@StatPage.stats.addAll(stats)
             statAdapter.notifyDataSetChanged()
-        }
+        })
+
     }
+
+
 }
 

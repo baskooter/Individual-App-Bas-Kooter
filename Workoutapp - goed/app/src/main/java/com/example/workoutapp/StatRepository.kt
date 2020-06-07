@@ -1,6 +1,8 @@
 package com.example.workoutapp
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 public class StatRepository(context: Context) {
 
@@ -11,9 +13,10 @@ public class StatRepository(context: Context) {
         statDao = statRoomDatabase!!.statDao()
     }
 
-    suspend fun getAllStats(): List<Stats> {
-        return statDao.getAllStats()
+    fun getAllStats() : LiveData<List<Stats>> {
+        return statDao?.getAllStats() ?: MutableLiveData(emptyList())
     }
+
 
     suspend fun insertStat(stat: Stats) {
         statDao.insertStat(stat)

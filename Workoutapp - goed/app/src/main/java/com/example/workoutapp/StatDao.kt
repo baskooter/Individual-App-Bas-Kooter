@@ -1,12 +1,13 @@
 package com.example.workoutapp
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface StatDao {
 
     @Query("SELECT * FROM statTable")
-    suspend  fun getAllStats(): List<Stats>
+    fun getAllStats(): LiveData<List<Stats>>
 
     @Insert
     suspend fun insertStat(stat: Stats)
