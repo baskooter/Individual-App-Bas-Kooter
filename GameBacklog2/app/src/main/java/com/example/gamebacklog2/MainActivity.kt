@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-const val ADD_REMINDER_REQUEST_CODE = 100
+const val ADD_GAME_REQUEST_CODE = 100
 const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.games.observe(this, Observer { reminders ->
+        viewModel.games.observe(this, Observer { games ->
             this@MainActivity.games.clear()
-            this@MainActivity.games.addAll(reminders)
+            this@MainActivity.games.addAll(games)
             gameAdapter.notifyDataSetChanged()
         })
 
@@ -80,7 +80,29 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun startAddActivity() {
+        val intent = Intent(this, AddGameActivity::class.java)
+        startActivityForResult(intent, ADD_GAME_REQUEST_CODE)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ADD_GAME_REQUEST_CODE -> {
+                    data?.let { safeData ->
+                        val game = safeData.getParcelableExtra<Game>(EXTRA_GAME)
+                        game?.let { safeGame ->
+                            viewModel.insertGame(safeGame)
+                        } ?: run {
+                            Log.e(TAG, "game is null")
+                        }
+                    } ?: run {
+                        Log.e(TAG, "empty intent data received")
+                    }
+                }
+            }
+        }
     }
 
 
@@ -123,9 +145,9 @@ class MainActivity : AppCompatActivity() {
             // Callback triggered when a user swiped an item.
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val reminderToDelete = games[position]
+                val gameToDelete = games[position]
 
-                viewModel.deleteGame(reminderToDelete)
+                viewModel.deleteGame(gameToDelete)
             }
         }
         return ItemTouchHelper(callback)
