@@ -28,6 +28,7 @@ const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
+
     private lateinit var games: ArrayList<Game>
     private lateinit var recyclerView: RecyclerView
     private lateinit var gameAdapter: GameAdapter
@@ -117,10 +118,24 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.delete_all_games -> {
+                deleteGames()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    fun deleteGames(){
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                viewModel.deleteAllGames()
+            }
+            observeViewModel()
+        }
+    }
+
+
 
     /**
      * Create a touch helper to recognize when a user swipes an item from a recycler view.

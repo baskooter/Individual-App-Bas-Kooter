@@ -28,6 +28,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         _count.value = _count.value?.plus(1)
     }
 
+    fun deleteAllGames() {
+        ioScope.launch {
+            gameRepository.deleteAllGames()
+        }
+    }
+
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     fun insertGame(game: Game) {

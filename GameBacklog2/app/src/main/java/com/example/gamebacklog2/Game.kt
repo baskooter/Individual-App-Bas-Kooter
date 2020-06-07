@@ -10,9 +10,10 @@ import java.util.*
 @Entity(tableName = "gameTable")
 data class Game(
     var title: String,
+    var console: String,
     var day: String,
     var month: String,
     var year: String,
-    var console: String,
+
     @PrimaryKey var id : Long? = null
 ) : Parcelable
