@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface GameDao {
-    @Query("SELECT * FROM gameTable")
+    @Query("SELECT * FROM gameTable ORDER BY year ASC")
     fun getAllGames() : LiveData<List<Game>>
 
     @Insert
